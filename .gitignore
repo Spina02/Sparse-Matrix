@@ -1,0 +1,8 @@
+src/CSR_SparseMatrix.cpp
+include/CSR_SparseMatrix.hpp
+
+# object files
+obj/
+
+# executables
+sparse_matrix
