@@ -23,7 +23,7 @@ class SparseMatrix {
         virtual std::vector<double> operator*(std::vector<double> vec) const = 0;
 
         // print matrix
-        virtual void print() const = 0;
+        void print() const;
 
     protected:
         unsigned int nrow, ncol, nnz = 0;

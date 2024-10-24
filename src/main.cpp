@@ -21,6 +21,12 @@ int main() {
     coo(2, 2) = 2;
     coo.print();
 
+    CSR_SparseMatrix csr(3, 3);
+    csr(0, 1) = 2;
+    csr(1, 0) = 2;
+    csr(2, 2) = 2;
+    csr.print();
+
     // create a vector
     std::vector<double> vec = {1, 2, 3};
 
@@ -28,6 +34,10 @@ int main() {
 
     // matrix-vector product
     std::vector<double> res = coo * vec;
+
+    print_vec(res);
+
+    res = csr * vec;
 
     print_vec(res);
 

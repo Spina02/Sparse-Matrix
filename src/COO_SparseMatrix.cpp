@@ -14,13 +14,18 @@ COO_SparseMatrix::~COO_SparseMatrix() {
     // destroy vectors
     rows.clear();
     cols.clear();
-    values.clear();
 
     // base class destructor is called automatically here
 }
 
 //get and set values with override on () operator
 double COO_SparseMatrix::operator()(unsigned int row, unsigned int col) const {
+    
+    if (row >= nrow || col >= ncol) {
+        std::cerr << "Error: index out of range" << std::endl;
+        return 0;
+    }
+    
     for (unsigned int i = 0; i < nnz; i++) {
         if (rows[i] == row && cols[i] == col) {
             return values[i];
@@ -30,6 +35,12 @@ double COO_SparseMatrix::operator()(unsigned int row, unsigned int col) const {
 }
 
 double& COO_SparseMatrix::operator()(unsigned int row, unsigned int col) {
+    
+    if (row >= nrow || col >= ncol) {
+        std::cerr << "Error: index out of range" << std::endl;
+        return values[0];
+    }
+    
     for (unsigned int i = 0; i < nnz; i++) {
         if (rows[i] == row && cols[i] == col) {
             return values[i];
@@ -43,6 +54,12 @@ double& COO_SparseMatrix::operator()(unsigned int row, unsigned int col) {
 
 // matrix-vector product with override on * operator
 std::vector<double> COO_SparseMatrix::operator*(std::vector<double> vec) const {
+    
+    if (vec.size() != ncol) {
+        std::cerr << "Error: vector size does not match matrix size" << std::endl;
+        return std::vector<double>();
+    }
+
     std::vector<double> res(ncol, 0);
     for (unsigned int i = 0; i < nnz; i++) {
         for (unsigned int j = 0; j < ncol; j++) {
@@ -52,15 +69,4 @@ std::vector<double> COO_SparseMatrix::operator*(std::vector<double> vec) const {
         }
     }
     return res;
-}
-
-void COO_SparseMatrix::print() const {
-    unsigned int i = 0, j = 0;
-    for (i = 0; i < nrow; ++i) {
-        for (j = 0; j < ncol; ++j) {
-            std::cout << (*this)(i, j) << " ";
-        }
-        std::cout << std::endl;
-    }
-    std::cout << std::endl;
 }

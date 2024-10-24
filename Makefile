@@ -14,12 +14,12 @@ BIN = sparse_matrix
 OBJS = $(OBJ_DIR)/main.o \
        $(OBJ_DIR)/SparseMatrix.o \
        $(OBJ_DIR)/COO_SparseMatrix.o \
-       #$(OBJ_DIR)/CSR_SparseMatrix.o
+       $(OBJ_DIR)/CSR_SparseMatrix.o
 
 # Header files
 HEADERS = $(INC_DIR)/SparseMatrix.hpp \
           $(INC_DIR)/COO_SparseMatrix.hpp \
-          #$(INC_DIR)/CSR_SparseMatrix.hpp
+          $(INC_DIR)/CSR_SparseMatrix.hpp
 
 # The following lines are used to pass arguments to the executable
 ARGS = "$(filter-out $@,$(MAKECMDGOALS))"

@@ -1,15 +1,15 @@
-#ifndef COOSPARSEMATRIX_H
-#define COOSPARSEMATRIX_H
+#ifndef CSRSPARSEMATRIX_H
+#define CSRSPARSEMATRIX_H
 
 #include <vector>
 #include "SparseMatrix.hpp"
 
-class COO_SparseMatrix : public SparseMatrix {
+class CSR_SparseMatrix : public SparseMatrix {
     public:
         // Constructor
-        COO_SparseMatrix(unsigned int nrow, unsigned int ncol);
+        CSR_SparseMatrix(unsigned int nrow, unsigned int ncol);
         // Destructor
-        ~COO_SparseMatrix();
+        ~CSR_SparseMatrix();
         // get and set values with override on () operator
         double operator()(unsigned int row, unsigned int col) const override;
         double& operator()(unsigned int row, unsigned int col) override;
@@ -17,7 +17,8 @@ class COO_SparseMatrix : public SparseMatrix {
         std::vector<double> operator*(std::vector<double> vec) const override;
 
     private:
-        std::vector<unsigned int> rows, cols;
+        std::vector<unsigned int> row_idx, cols;
+        std::vector<double> values;
 };
 
 #endif
