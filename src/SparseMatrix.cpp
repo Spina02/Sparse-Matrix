@@ -6,6 +6,11 @@ SparseMatrix::SparseMatrix(unsigned int nrow, unsigned int ncol) : nrow(nrow), n
     values = std::vector<double>();
 }
 
+// copy constructor
+SparseMatrix::SparseMatrix(const SparseMatrix& other) 
+    : nrow(other.nrow), ncol(other.ncol), nnz(other.nnz), values(other.values) {
+}
+
 // destructor
 SparseMatrix::~SparseMatrix() {
     values.clear();
@@ -21,6 +26,14 @@ unsigned int SparseMatrix::get_cols() const {
 
 unsigned int SparseMatrix::get_nnz() const {
     return nnz;
+}
+
+SparseMatrix& SparseMatrix::operator=(const SparseMatrix& other) {
+    nrow = other.nrow;
+    ncol = other.ncol;
+    nnz = other.nnz;
+    values = other.values;
+    return *this;
 }
 
 void SparseMatrix::print() const {

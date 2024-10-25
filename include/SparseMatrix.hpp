@@ -3,10 +3,15 @@
 #ifndef SPARSEMATRIX_H
 #define SPARSEMATRIX_H
 
+class COO_SparseMatrix; // Forward declaration
+class CSR_SparseMatrix; // Forward declaration
+
 class SparseMatrix {
     public:
         // Constructor
         SparseMatrix(unsigned int nrow, unsigned int ncol);
+        // Copy constructor
+        SparseMatrix(const SparseMatrix& other);
         // Destructor
         virtual ~SparseMatrix() = 0;
 
@@ -15,19 +20,26 @@ class SparseMatrix {
         unsigned int get_cols() const;
         unsigned int get_nnz() const;
 
-        // get and set values with override on () operator
-        virtual double operator()(unsigned int row, unsigned int col) const = 0; // get
-        virtual double& operator()(unsigned int row, unsigned int col) = 0;      // set
-
+        // Copy assignment operator
+        SparseMatrix& operator=(const SparseMatrix& other);
+        // getter with override on () const operator
+        virtual double operator()(unsigned int row, unsigned int col) const = 0;
+        // setter with override on () operator
+        virtual double& operator()(unsigned int row, unsigned int col) = 0;
         // matrix-vextor product with override on * operator
         virtual std::vector<double> operator*(std::vector<double> vec) const = 0;
-
+        // compare two matrices
+        virtual bool operator==(const SparseMatrix& other) const = 0;
         // print matrix
         void print() const;
 
     protected:
         unsigned int nrow, ncol, nnz = 0;
         std::vector<double> values;
+
+        // Friend classes for double dispatch
+        friend class COO_SparseMatrix;
+        friend class CSR_SparseMatrix;
 };
 
 #endif

@@ -1,5 +1,6 @@
 #include <iostream>
 #include "COO_SparseMatrix.hpp"
+#include "CSR_SparseMatrix.hpp"
 
 //constructor
 COO_SparseMatrix::COO_SparseMatrix(unsigned int nrow, unsigned int ncol) : SparseMatrix(nrow, ncol) {
@@ -7,6 +8,20 @@ COO_SparseMatrix::COO_SparseMatrix(unsigned int nrow, unsigned int ncol) : Spars
     rows = std::vector<unsigned int>();
     cols = std::vector<unsigned int>();
     values = std::vector<double>();
+}
+
+// copy constructor
+COO_SparseMatrix::COO_SparseMatrix(const SparseMatrix& other) : SparseMatrix(other) {
+    if (const CSR_SparseMatrix* csr = dynamic_cast<const CSR_SparseMatrix*>(&other)) {
+        // convert other to coo matrix
+        *this = csr->csr2coo();
+    } else {
+        // cast other to coo matrix
+        const COO_SparseMatrix& coo = dynamic_cast<const COO_SparseMatrix&>(other);
+        // copy values
+        rows = coo.rows;
+        cols = coo.cols;
+    }
 }
 
 // destructor
@@ -67,6 +82,28 @@ std::vector<double> COO_SparseMatrix::operator*(std::vector<double> vec) const {
                 res[rows[i]] += values[i] * vec[j];
             }
         }
+    }
+    return res;
+}
+
+// compare two matrices
+bool COO_SparseMatrix::operator==(const SparseMatrix& other) const {
+    if (nrow != other.get_rows() || ncol != other.get_cols() || nnz != other.get_nnz()) {
+        return false;
+    }
+    for (unsigned int i = 0; i < nnz; i++) {
+        if (other(rows[i], cols[i]) != values[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+// convert coo to csr matrix
+CSR_SparseMatrix COO_SparseMatrix::coo2csr() const {
+    CSR_SparseMatrix res(nrow, ncol);
+    for (unsigned int i = 0; i < nnz; i++) {
+        res(rows[i], cols[i]) = values[i];
     }
     return res;
 }

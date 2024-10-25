@@ -3,43 +3,34 @@
 #include "SparseMatrix.hpp"
 #include "COO_SparseMatrix.hpp"
 #include "CSR_SparseMatrix.hpp"
+#include "tests.hpp"
 
-void print_vec(std::vector<double> vec) {
-    for (unsigned int i = 0; i < vec.size(); i++) {
-        std::cout << vec[i] << std::endl;
-    }
-    std::cout << std::endl;
+void test() {
 
+    std::cout << "Running tests" << std::endl << std::endl;
+
+    if (test_equal()) 
+        std::cout << "Equality test passed" << std::endl << std::endl;
+    else
+        std::cout << "Equality test failed" << std::endl << std::endl;
+
+    if (test_matrix_vector_product())
+        std::cout << "Matrix-vector product test passed" << std::endl << std::endl;
+    else
+        std::cout << "Matrix-vector product test failed" << std::endl << std::endl;
+
+
+    if (test_conversion())
+        std::cout << "Conversion test passed" << std::endl << std::endl;
+    else
+        std::cout << "Conversion test failed" << std::endl << std::endl;
+
+    if (test_copy())
+        std::cout << "Copy test passed" << std::endl << std::endl;
+    else
+        std::cout << "Copy test failed" << std::endl << std::endl;
 }
 
 int main() {
-
-    // create a COO sparse matrix
-    COO_SparseMatrix coo(3, 3);
-    coo(0, 1) = 2;
-    coo(1, 0) = 2;
-    coo(2, 2) = 2;
-    coo.print();
-
-    CSR_SparseMatrix csr(3, 3);
-    csr(0, 1) = 2;
-    csr(1, 0) = 2;
-    csr(2, 2) = 2;
-    csr.print();
-
-    // create a vector
-    std::vector<double> vec = {1, 2, 3};
-
-    print_vec(vec);
-
-    // matrix-vector product
-    std::vector<double> res = coo * vec;
-
-    print_vec(res);
-
-    res = csr * vec;
-
-    print_vec(res);
-
-    return 0;
+    test();
 }
