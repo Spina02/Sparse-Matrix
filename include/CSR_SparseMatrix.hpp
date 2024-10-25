@@ -7,6 +7,7 @@
 
 class CSR_SparseMatrix : public SparseMatrix {
     public:
+        //? ------------- Constructors and Destructor ------------
         // Constructor
         CSR_SparseMatrix(unsigned int nrow, unsigned int ncol);
         // Copy constructor
@@ -14,9 +15,14 @@ class CSR_SparseMatrix : public SparseMatrix {
         // Destructor
         ~CSR_SparseMatrix();
 
-        //coo to csr converter
+        //? ------------- Utility functions ------------
+        // random csr matrix generator
+        static CSR_SparseMatrix& random(unsigned int nrow, unsigned int ncol, double density = 0.3);
+
+        // coo to csr converter
         COO_SparseMatrix csr2coo() const;
 
+        //? ----------- Operator overloading -----------
         // getter with override on () const operator
         double operator()(unsigned int row, unsigned int col) const override;
         // setter with override on () operator

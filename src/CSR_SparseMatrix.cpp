@@ -115,3 +115,20 @@ COO_SparseMatrix CSR_SparseMatrix::csr2coo() const {
     }
     return res;
 }
+
+// random csr matrix generator
+CSR_SparseMatrix& CSR_SparseMatrix::random(unsigned int nrow, unsigned int ncol, double density) {
+    // seed random number generator
+    srand(static_cast<unsigned int>(time(0)+1)); // +1 to avoid same random matrix as coo
+    CSR_SparseMatrix* res = new CSR_SparseMatrix(nrow, ncol);
+    for (unsigned int i = 0; i < nrow; i++) {
+        for (unsigned int j = 0; j < ncol; j++) {
+            if ((double)rand() / RAND_MAX < density) {
+                double mantissa = (double) rand() / RAND_MAX;
+                double intpart = (double) (rand()%100);
+                (*res)(i, j) =  mantissa + intpart;
+            }
+        }
+    }
+    return *res;
+}

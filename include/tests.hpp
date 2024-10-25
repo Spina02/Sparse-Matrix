@@ -13,7 +13,6 @@ void print_vec(std::vector<double> vec);
 // test functions
 bool test_equal();
 bool test_matrix_vector_product();
-bool test_conversion();
-bool test_copy();
+bool test_copy_convertion();
 
 #endif

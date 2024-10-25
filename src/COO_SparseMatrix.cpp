@@ -1,6 +1,7 @@
 #include <iostream>
 #include "COO_SparseMatrix.hpp"
 #include "CSR_SparseMatrix.hpp"
+#include <time.h>
 
 //constructor
 COO_SparseMatrix::COO_SparseMatrix(unsigned int nrow, unsigned int ncol) : SparseMatrix(nrow, ncol) {
@@ -106,4 +107,21 @@ CSR_SparseMatrix COO_SparseMatrix::coo2csr() const {
         res(rows[i], cols[i]) = values[i];
     }
     return res;
+}
+
+// generate random coo matrix
+COO_SparseMatrix& COO_SparseMatrix::random(unsigned int nrow, unsigned int ncol, double density) {
+    // Seed the random number generator
+    srand(static_cast<unsigned int>(time(0)));
+    COO_SparseMatrix* res = new COO_SparseMatrix(nrow, ncol);
+    for (unsigned int i = 0; i < nrow; i++) {
+        for (unsigned int j = 0; j < ncol; j++) {
+            if ((double)rand() / RAND_MAX < density) {
+                double mantissa = (double)rand() / RAND_MAX;
+                double intpart = (double)(rand()%100);
+                (*res)(i, j) =  mantissa + intpart;
+            }
+        }
+    }
+    return *res;
 }

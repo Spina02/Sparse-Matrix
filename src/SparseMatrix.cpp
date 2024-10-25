@@ -1,5 +1,6 @@
 #include "SparseMatrix.hpp"
 #include <iostream>
+#include <iomanip>
 
 // contructor
 SparseMatrix::SparseMatrix(unsigned int nrow, unsigned int ncol) : nrow(nrow), ncol(ncol) {
@@ -37,10 +38,11 @@ SparseMatrix& SparseMatrix::operator=(const SparseMatrix& other) {
 }
 
 void SparseMatrix::print() const {
+    std::cout << std::fixed << std::setprecision(2);
     unsigned int i = 0, j = 0;
     for (i = 0; i < nrow; ++i) {
         for (j = 0; j < ncol; ++j) {
-            std::cout << (*this)(i, j) << " ";
+            std::cout << std::setw(7) << (*this)(i, j) << " ";
         }
         std::cout << std::endl;
     }

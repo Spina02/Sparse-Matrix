@@ -24,10 +24,7 @@ bool test_equal() {
     csr2(1, 0) = 2;
     csr2(2, 2) = 2;
 
-    CSR_SparseMatrix csr3(3, 3);
-    csr3(0, 1) = 2;
-    csr3(1, 0) = 2;
-    csr3(2, 2) = 3;
+    CSR_SparseMatrix csr3 = CSR_SparseMatrix::random(3, 3);
 
     COO_SparseMatrix coo1(3, 3);
     coo1(0, 1) = 2;
@@ -39,10 +36,7 @@ bool test_equal() {
     coo2(1, 0) = 2;
     coo2(2, 2) = 2;
 
-    COO_SparseMatrix coo3(3, 3);
-    coo3(0, 1) = 2;
-    coo3(1, 0) = 2;
-    coo3(2, 2) = 3;
+    COO_SparseMatrix coo3 = COO_SparseMatrix::random(3, 3);
 
     res[0] = (csr1 == csr2) == true;
     res[1] = (csr1 == csr3) == false;
@@ -115,51 +109,14 @@ bool test_matrix_vector_product() {
     return passed;
 }
 
-bool test_conversion() {
-    std::cout << "Testing conversion" << std::endl;
-
-    // store tests result
-    bool passed = 1;
-    std::vector res = std::vector<bool>(2, false);
-
-    CSR_SparseMatrix csr(3, 3);
-    csr(0, 1) = 2;
-    csr(1, 0) = 2;
-    csr(2, 2) = 2;
-
-    COO_SparseMatrix coo = csr;
-
-    CSR_SparseMatrix csr2 = coo;
-
-    res[0] = (coo == csr);
-    res[1] = (csr == csr2);
-
-    for (unsigned int i = 0; i < res.size(); i++) {
-        if (res[i]) {
-            std::cout << "Test " << i << " passed" << std::endl;
-        } else {
-            passed = 0;
-            std::cout << "Test " << i << " failed" << std::endl;
-        }
-    }
-
-    // free memory
-    res.clear();
-
-    return passed;
-}
-
-bool test_copy() {
-    std::cout << "Testing copy" << std::endl;
+bool test_copy_convertion() {
+    std::cout << "Testing copy and conversion" << std::endl;
 
     // store tests result
     bool passed = 1;
     std::vector res = std::vector<bool>(8, false);
 
-    CSR_SparseMatrix csr(3, 3);
-    csr(0, 1) = 2;
-    csr(1, 0) = 2;
-    csr(2, 2) = 2;
+    CSR_SparseMatrix csr = CSR_SparseMatrix::random(3, 3);
 
     CSR_SparseMatrix csr_eq = csr;
     COO_SparseMatrix coo_cp(csr);
@@ -170,10 +127,7 @@ bool test_copy() {
     res[2] = (csr == coo_eq);
     res[3] = (coo_cp == coo_eq);
 
-    COO_SparseMatrix coo(3, 3);
-    coo(0, 0) = 2;
-    coo(1, 2) = 2;
-    coo(2, 1) = 2;
+    COO_SparseMatrix coo = COO_SparseMatrix::random(3, 3);
 
     COO_SparseMatrix coo_eq2 = coo;
     CSR_SparseMatrix csr_cp(coo);

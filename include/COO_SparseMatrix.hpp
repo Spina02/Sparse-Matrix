@@ -7,6 +7,7 @@
 
 class COO_SparseMatrix : public SparseMatrix {
     public:
+        //? ------------- Constructors and Destructor ------------
         // Constructor
         COO_SparseMatrix(unsigned int nrow, unsigned int ncol);
         // Copy constructor
@@ -14,9 +15,13 @@ class COO_SparseMatrix : public SparseMatrix {
         // Destructor
         ~COO_SparseMatrix();
 
+        //? ------------- Utility functions ------------
+        static COO_SparseMatrix& random(unsigned int nrow, unsigned int ncol, double density = 0.3);
+
         //csr to coo converter
         CSR_SparseMatrix coo2csr() const;
 
+        //? ----------- Operator overloading -----------
         // getter with override on () const operator
         double operator()(unsigned int row, unsigned int col) const override;
         // setter with override on () operator
