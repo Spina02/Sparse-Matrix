@@ -1,7 +1,3 @@
-Sure! Here is the translated README for your project:
-
----
-
 # SparseMatrix Project
 
 This project implements sparse matrices using two storage formats:
