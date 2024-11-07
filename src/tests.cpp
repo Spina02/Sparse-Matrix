@@ -46,12 +46,7 @@ bool test_equal() {
     res[5] = (csr1 == coo3) == false;
 
     for (unsigned int i = 0; i < res.size(); i++) {
-        if (res[i]) {
-            std::cout << "Test " << i << " passed" << std::endl;
-        } else {
-            passed = 0;
-            std::cout << "Test " << i << " failed" << std::endl;
-        }
+        std::cout << "Test " << i << (res[i] ? " passed" : "failed") << std::endl;
     }
 
     // free memory
@@ -91,12 +86,7 @@ bool test_matrix_vector_product() {
     res[3] = (res_csr2 == std::vector<double>({0, -2, 2}));
 
     for (unsigned int i = 0; i < res.size(); i++) {
-        if (res[i]) {
-            std::cout << "Test " << i << " passed" << std::endl;
-        } else {
-            passed = 0;
-            std::cout << "Test " << i << " failed" << std::endl;
-        }
+        std::cout << "Test " << i << (res[i] ? " passed" : "failed") << std::endl;
     }
 
     // free memory
@@ -139,12 +129,7 @@ bool test_copy_convertion() {
     res[7] = (csr_cp == csr_eq2);
 
     for (unsigned int i = 0; i < res.size(); i++) {
-        if (res[i]) {
-            std::cout << "Test " << i << " passed" << std::endl;
-        } else {
-            passed = 0;
-            std::cout << "Test " << i << " failed" << std::endl;
-        }
+        std::cout << "Test " << i << (res[i] ? " passed" : "failed") << std::endl;
     }
 
     // free memory

@@ -14,14 +14,16 @@ COO_SparseMatrix::COO_SparseMatrix(unsigned int nrow, unsigned int ncol) : Spars
 // copy constructor
 COO_SparseMatrix::COO_SparseMatrix(const SparseMatrix& other) : SparseMatrix(other) {
     if (const CSR_SparseMatrix* csr = dynamic_cast<const CSR_SparseMatrix*>(&other)) {
-        // convert other to coo matrix
+        // Convert CSR to COO
         *this = csr->csr2coo();
+    } else if (const COO_SparseMatrix* coo = dynamic_cast<const COO_SparseMatrix*>(&other)) {
+        // Copy values from COO
+        rows = coo->rows;
+        cols = coo->cols;
+        values = coo->values;
+        nnz = coo->nnz;
     } else {
-        // cast other to coo matrix
-        const COO_SparseMatrix& coo = dynamic_cast<const COO_SparseMatrix&>(other);
-        // copy values
-        rows = coo.rows;
-        cols = coo.cols;
+        std::cerr << "Error: Unsupported SparseMatrix type" << std::endl;
     }
 }
 
