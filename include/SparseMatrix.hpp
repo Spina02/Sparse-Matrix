@@ -1,55 +1,96 @@
-#include <vector>
-#include <iostream>
-
 #ifndef SPARSEMATRIX_H
 #define SPARSEMATRIX_H
 
-class COO_SparseMatrix; // Forward declaration
-class CSR_SparseMatrix; // Forward declaration
+#include <vector>
+#include <iostream>
+#include <iomanip>
 
+// Forward declarations
+template<typename T> class COO_SparseMatrix;
+template<typename T> class CSR_SparseMatrix;
+
+template<typename T>
 class SparseMatrix {
-    public:
-        //? ------------- Constructors and Destructor ------------
-        // Constructor
-        SparseMatrix(unsigned int nrow, unsigned int ncol);
-        // Copy constructor
-        SparseMatrix(const SparseMatrix& other);
-        // Destructor
-        virtual ~SparseMatrix() = 0;
+public:
+    SparseMatrix(unsigned int nrow, unsigned int ncol);
+    SparseMatrix(const SparseMatrix& other);
+    virtual ~SparseMatrix();
 
-        //? ------------- Utility functions ------------
-        
-        // get number of rows, columns, and non-zero elements
-        unsigned int get_rows() const;
-        unsigned int get_cols() const;
-        unsigned int get_nnz() const;
+    unsigned int get_rows() const;
+    unsigned int get_cols() const;
+    unsigned int get_nnz() const;
 
-        // print matrix
-        void print() const;
+    void print() const;
 
-        //? ----------- Operator overloading -----------
-        
-        // Copy assignment operator
-        SparseMatrix& operator=(const SparseMatrix& other);
-        
-        // getter with override on () const operator
-        virtual double operator()(unsigned int row, unsigned int col) const = 0;
-        // setter with override on () operator
-        virtual double& operator()(unsigned int row, unsigned int col) = 0;
-        
-        // matrix-vextor product with override on * operator
-        virtual std::vector<double> operator*(std::vector<double> vec) const = 0;
-        
-        // compare two matrices
-        virtual bool operator==(const SparseMatrix& other) const = 0;
+    SparseMatrix& operator=(const SparseMatrix& other);
+    
+    virtual T operator()(unsigned int row, unsigned int col) const = 0;
+    virtual T& operator()(unsigned int row, unsigned int col) = 0;
+    virtual std::vector<T> operator*(const std::vector<T>& vec) const = 0;
+    virtual bool operator==(const SparseMatrix<T>& other) const = 0;
 
-    protected:
-        unsigned int nrow, ncol, nnz = 0;
-        std::vector<double> values;
+protected:
+    unsigned int nrow, ncol, nnz = 0;
+    std::vector<T> values;
 
-        // Friend classes for double dispatch
-        friend class COO_SparseMatrix;
-        friend class CSR_SparseMatrix;
+    // Friend classes
+    friend class COO_SparseMatrix<T>;
+    friend class CSR_SparseMatrix<T>;
 };
+
+// Implementazioni
+
+template <typename T>
+SparseMatrix<T>::SparseMatrix(unsigned int nrow, unsigned int ncol) : nrow(nrow), ncol(ncol) {
+    values = std::vector<T>();
+}
+
+template <typename T>
+SparseMatrix<T>::SparseMatrix(const SparseMatrix& other)
+    : nrow(other.nrow), ncol(other.ncol), nnz(other.nnz), values(other.values) {
+}
+
+template <typename T>
+SparseMatrix<T>::~SparseMatrix() {
+    values.clear();
+}
+
+template <typename T>
+unsigned int SparseMatrix<T>::get_rows() const {
+    return nrow;
+}
+
+template <typename T>
+unsigned int SparseMatrix<T>::get_cols() const {
+    return ncol;
+}
+
+template <typename T>
+unsigned int SparseMatrix<T>::get_nnz() const {
+    return nnz;
+}
+
+template <typename T>
+SparseMatrix<T>& SparseMatrix<T>::operator=(const SparseMatrix& other) {
+    if (this != &other) {
+        nrow = other.nrow;
+        ncol = other.ncol;
+        nnz = other.nnz;
+        values = other.values;
+    }
+    return *this;
+}
+
+template <typename T>
+void SparseMatrix<T>::print() const {
+    std::cout << std::fixed << std::setprecision(2);
+    for (unsigned int i = 0; i < nrow; ++i) {
+        for (unsigned int j = 0; j < ncol; ++j) {
+            std::cout << std::setw(7) << (*this)(i, j) << " ";
+        }
+        std::cout << std::endl;
+    }
+    std::cout << std::endl;
+}
 
 #endif

@@ -12,10 +12,6 @@ BIN = sparse_matrix
 
 # Object files
 OBJS = $(OBJ_DIR)/main.o \
-       $(OBJ_DIR)/SparseMatrix.o \
-       $(OBJ_DIR)/COO_SparseMatrix.o \
-       $(OBJ_DIR)/CSR_SparseMatrix.o \
-	   $(OBJ_DIR)/tests.o
 
 # Header files
 HEADERS = $(INC_DIR)/SparseMatrix.hpp \
