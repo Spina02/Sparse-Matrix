@@ -28,7 +28,7 @@ class CSR_SparseMatrix : public SparseMatrix {
         // setter with override on () operator
         double& operator()(unsigned int row, unsigned int col) override;
         // matrix-vextor product with override on * operator
-        std::vector<double> operator*(std::vector<double> vec) const override;
+        std::vector<double> operator*(const std::vector<double> vec) const override;
         // compare two matrices
         bool operator==(const SparseMatrix& other) const override;
 

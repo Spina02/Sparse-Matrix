@@ -71,8 +71,7 @@ double& COO_SparseMatrix::operator()(unsigned int row, unsigned int col) {
 }
 
 // matrix-vector product with override on * operator
-std::vector<double> COO_SparseMatrix::operator*(std::vector<double> vec) const {
-    
+std::vector<double> COO_SparseMatrix::operator*(const std::vector<double> vec) const {
     if (vec.size() != ncol) {
         std::cerr << "Error: vector size does not match matrix size" << std::endl;
         return std::vector<double>();

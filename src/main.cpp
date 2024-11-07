@@ -18,6 +18,15 @@ void perform_tests() {
 
     res = test_copy_convertion();
     std::cout << "Copy and convertion test " << (res ? "passed" : "failed") << std::endl << std::endl;
+
+    res = test_row_sum();
+    std::cout << "Row sum test " << (res ? "passed" : "failed") << std::endl << std::endl;
+
+    res = test_canonical_basis();
+    std::cout << "Canonical basis test " << (res ? "passed" : "failed") << std::endl << std::endl;
+
+    res = test_empty_matrix();
+    std::cout << "Edge cases test " << (res ? "passed" : "failed") << std::endl << std::endl;
 }
 
 int main() {

@@ -30,10 +30,12 @@ unsigned int SparseMatrix::get_nnz() const {
 }
 
 SparseMatrix& SparseMatrix::operator=(const SparseMatrix& other) {
-    nrow = other.nrow;
-    ncol = other.ncol;
-    nnz = other.nnz;
-    values = other.values;
+    if (this != &other) {
+        nrow = other.nrow;
+        ncol = other.ncol;
+        nnz = other.nnz;
+        values = other.values;
+    }
     return *this;
 }
 

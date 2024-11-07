@@ -1,4 +1,5 @@
 #include <vector>
+#include <iostream>
 
 #ifndef SPARSEMATRIX_H
 #define SPARSEMATRIX_H
