@@ -32,7 +32,7 @@ private:
     std::vector<unsigned int> row_idx, cols;
 };
 
-// Implementation
+//? ------------------- Implementation -------------------
 
 // Constructor
 template<typename T>
@@ -63,7 +63,9 @@ CSR_SparseMatrix<T>::~CSR_SparseMatrix() {
     row_idx.clear();
 }
 
-// Operator overloading
+//? ------------------- Operator overloading -------------------
+
+// Get value at (row, col)
 template<typename T>
 T CSR_SparseMatrix<T>::operator()(unsigned int row, unsigned int col) const {
     if (row >= this->nrow || col >= this->ncol) {
@@ -79,7 +81,7 @@ T CSR_SparseMatrix<T>::operator()(unsigned int row, unsigned int col) const {
     static T temp = T();
     return temp;
 }
-
+// Get and set values with override on () operator
 template<typename T>
 T& CSR_SparseMatrix<T>::operator()(unsigned int row, unsigned int col) {
     if (row >= this->nrow || col >= this->ncol) {
@@ -113,6 +115,7 @@ T& CSR_SparseMatrix<T>::operator()(unsigned int row, unsigned int col) {
     return this->values[insert_pos];
 }
 
+// Matrix-vector product
 template<typename T>
 std::vector<T> CSR_SparseMatrix<T>::operator*(const std::vector<T>& vec) const {
     if (vec.size() != this->ncol) {
@@ -129,6 +132,7 @@ std::vector<T> CSR_SparseMatrix<T>::operator*(const std::vector<T>& vec) const {
     return res;
 }
 
+// Comparison operator
 template<typename T>
 bool CSR_SparseMatrix<T>::operator==(const SparseMatrix<T>& other) const {
     if (this->nrow != other.get_rows() || this->ncol != other.get_cols() || this->nnz != other.get_nnz()) {
@@ -161,6 +165,7 @@ CSR_SparseMatrix<T>& CSR_SparseMatrix<T>::random(unsigned int nrow, unsigned int
     return *res;
 }
 
+// Convert CSR to COO
 template<typename T>
 COO_SparseMatrix<T> CSR_SparseMatrix<T>::csr2coo() const {
     COO_SparseMatrix<T> res(this->nrow, this->ncol);

@@ -38,38 +38,44 @@ protected:
     friend class CSR_SparseMatrix<T>;
 };
 
-// Implementazioni
+//? ------------------- Implementations -------------------
 
 template <typename T>
 SparseMatrix<T>::SparseMatrix(unsigned int nrow, unsigned int ncol) : nrow(nrow), ncol(ncol) {
     values = std::vector<T>();
 }
 
+// Copy constructor
 template <typename T>
 SparseMatrix<T>::SparseMatrix(const SparseMatrix& other)
     : nrow(other.nrow), ncol(other.ncol), nnz(other.nnz), values(other.values) {
 }
 
+// Destructor
 template <typename T>
 SparseMatrix<T>::~SparseMatrix() {
     values.clear();
 }
 
+// Get the number of rows
 template <typename T>
 unsigned int SparseMatrix<T>::get_rows() const {
     return nrow;
 }
 
+// Get the number of columns
 template <typename T>
 unsigned int SparseMatrix<T>::get_cols() const {
     return ncol;
 }
 
+// Get the number of non-zero elements
 template <typename T>
 unsigned int SparseMatrix<T>::get_nnz() const {
     return nnz;
 }
 
+// Assignment operator
 template <typename T>
 SparseMatrix<T>& SparseMatrix<T>::operator=(const SparseMatrix& other) {
     if (this != &other) {
@@ -81,6 +87,7 @@ SparseMatrix<T>& SparseMatrix<T>::operator=(const SparseMatrix& other) {
     return *this;
 }
 
+// Print the matrix
 template <typename T>
 void SparseMatrix<T>::print() const {
     std::cout << std::fixed << std::setprecision(2);

@@ -31,7 +31,7 @@ private:
     std::vector<unsigned int> rows, cols;
 };
 
-// Implementation
+//? ------------------- Implementation -------------------
 
 // Constructor
 template<typename T>
@@ -63,7 +63,9 @@ COO_SparseMatrix<T>::~COO_SparseMatrix() {
     cols.clear();
 }
 
-// Utility functions
+//? ------------------- Utility functions -------------------
+
+// Generate random COO matrix
 template<typename T>
 COO_SparseMatrix<T>& COO_SparseMatrix<T>::random(unsigned int nrow, unsigned int ncol, double density) {
     srand(static_cast<unsigned int>(time(0)));
@@ -80,6 +82,7 @@ COO_SparseMatrix<T>& COO_SparseMatrix<T>::random(unsigned int nrow, unsigned int
     return *res;
 }
 
+// Convert COO to CSR
 template<typename T>
 CSR_SparseMatrix<T> COO_SparseMatrix<T>::coo2csr() const {
     CSR_SparseMatrix<T> res(this->nrow, this->ncol);
@@ -89,7 +92,9 @@ CSR_SparseMatrix<T> COO_SparseMatrix<T>::coo2csr() const {
     return res;
 }
 
-// Operator overloading
+//? ------------------- Operator overloading -------------------
+
+// Get value at (row, col)
 template<typename T>
 T COO_SparseMatrix<T>::operator()(unsigned int row, unsigned int col) const {
     if (row >= this->nrow || col >= this->ncol) {
@@ -106,6 +111,7 @@ T COO_SparseMatrix<T>::operator()(unsigned int row, unsigned int col) const {
     return temp;
 }
 
+// insert or update value at (row, col)
 template<typename T>
 T& COO_SparseMatrix<T>::operator()(unsigned int row, unsigned int col) {
     if (row >= this->nrow || col >= this->ncol) {
@@ -123,6 +129,7 @@ T& COO_SparseMatrix<T>::operator()(unsigned int row, unsigned int col) {
     return this->values[this->nnz++];
 }
 
+// matrix-vector product with override on * operator
 template<typename T>
 std::vector<T> COO_SparseMatrix<T>::operator*(const std::vector<T>& vec) const {
     if (vec.size() != this->ncol) {
