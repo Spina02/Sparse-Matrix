@@ -4,7 +4,7 @@ CXXFLAGS = -std=c++17 -Wall -Wextra -Wpedantic -Werror -g
 
 # Directories
 SRC_DIR = src
-OBJ_DIR = obj
+OBJ_DIR = build
 INC_DIR = include
 
 # Executable name

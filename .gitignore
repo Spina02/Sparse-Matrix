@@ -1,5 +1,5 @@
 # object files
-obj/
+build/
 
 # executables
 sparse_matrix
